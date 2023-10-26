@@ -511,6 +511,11 @@ class _PhotoViewState extends State<PhotoView>
         final backgroundDecoration = widget.backgroundDecoration ??
             const BoxDecoration(color: Colors.black);
 
+        final isObjectKey = widget.key != null && widget.key is ObjectKey;
+
+        final isIntInObjK =
+            isObjectKey && (widget.key as ObjectKey).value is int;
+
         return widget._isCustomChild
             ? CustomChildWrapper(
                 child: widget.child,
@@ -538,6 +543,7 @@ class _PhotoViewState extends State<PhotoView>
                 strictScale: widget.strictScale,
               )
             : ImageWrapper(
+                idx: isIntInObjK ? (widget.key as ObjectKey).value as int : 0,
                 imageProvider: widget.imageProvider!,
                 loadingBuilder: widget.loadingBuilder,
                 backgroundDecoration: backgroundDecoration,
@@ -622,4 +628,5 @@ typedef PhotoViewImageScaleEndCallback = Function(
 typedef LoadingBuilder = Widget Function(
   BuildContext context,
   ImageChunkEvent? event,
+  int indx,
 );

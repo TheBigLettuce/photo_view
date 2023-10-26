@@ -21,7 +21,7 @@ class NetworkExamples extends StatelessWidget {
                     imageProvider: const NetworkImage(
                       "https://source.unsplash.com/1900x3600/?camera,paper",
                     ),
-                    loadingBuilder: (context, event) {
+                    loadingBuilder: (context, event, _) {
                       if (event == null) {
                         return const Center(
                           child: Text("Loading"),

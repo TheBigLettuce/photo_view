@@ -8,6 +8,7 @@ import 'utils/photo_view_utils.dart';
 class ImageWrapper extends StatefulWidget {
   const ImageWrapper({
     Key? key,
+    required this.idx,
     required this.imageProvider,
     required this.loadingBuilder,
     required this.backgroundDecoration,
@@ -35,6 +36,8 @@ class ImageWrapper extends StatefulWidget {
     required this.enablePanAlways,
     required this.strictScale,
   }) : super(key: key);
+
+  final int idx;
 
   final ImageProvider imageProvider;
   final LoadingBuilder? loadingBuilder;
@@ -168,7 +171,7 @@ class _ImageWrapperState extends State<ImageWrapper> {
   @override
   Widget build(BuildContext context) {
     if (_loading) {
-      return _buildLoading(context);
+      return _buildLoading(context, widget.idx);
     }
 
     if (_lastException != null) {
@@ -207,9 +210,9 @@ class _ImageWrapperState extends State<ImageWrapper> {
     );
   }
 
-  Widget _buildLoading(BuildContext context) {
+  Widget _buildLoading(BuildContext context, int id) {
     if (widget.loadingBuilder != null) {
-      return widget.loadingBuilder!(context, _loadingProgress);
+      return widget.loadingBuilder!(context, _loadingProgress, id);
     }
 
     return PhotoViewDefaultLoading(
